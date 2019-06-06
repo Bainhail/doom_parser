@@ -12,18 +12,17 @@ DOBJ	= ./objs
 
 OBJS	= $(addprefix $(DOBJ)/, $(OBJ))
 
-
 all		:	$(NAME)
 
 vpath %.c ./:./srcs/
 
 $(DOBJ)/%.o:%.c
 	@mkdir $(DOBJ) 2> /dev/null || true
-	@$(CC) -c $< -o $@ $(CFLAG)
+	@$(CC) -c $< -o $@ $(CFLAG) -I./includes/
 
 $(NAME)	:	$(OBJS)
 		@echo -n "Objects files creation..."
-		@$(CC) -o $(NAME) $(OBJS)
+		@$(CC) -o $(NAME) $(OBJS) -I./includes/
 		@echo "OK"
 
 clean	:

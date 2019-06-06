@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <parser.h>
 
 void	print_error(char *error_sentence, int error_code)
 {
@@ -49,7 +50,8 @@ void	read_var_from_file(int fd, int *nb, int *offset)
 		(*offset)++;
 		readone_from_file(fd, &buf[2]);
 		(*offset)++;
-		*nb += ft_power_up((uint32_t)buf[0], (uint32_t)buf[1]) * (uint32_t)buf[2];
+		*nb += ft_power_up((uint32_t)buf[0], \
+							(uint32_t)buf[1]) * (uint32_t)buf[2];
 		pow++;
 	}
 	(*offset)++;
@@ -58,17 +60,13 @@ void	read_var_from_file(int fd, int *nb, int *offset)
 void	put_var_to_file(int fd, uint32_t nb)
 {
 	uint32_t	pow;
-	uint32_t	mult;
 
 	pow = 0;
-	mult = 0;
 	while (pow < 5)
 	{
-		mult = nb / 255;
 		putone_to_file(fd, (unsigned char)(255));
 		putone_to_file(fd, (unsigned char)(pow));
 		putone_to_file(fd, (unsigned char)(nb % 255));
-//		printf("mult = %d\ncpy / 255 reste = %d\npow = %d\n\n", mult, nb % 255, pow);
 		nb = nb / 255;
 		pow++;
 	}
@@ -79,14 +77,17 @@ int		main(int ac, char **av)
 {
 	int					fd;
 	int					nb_res;
+	int					deci;
 	char				c;
 	uint32_t			nb1;
 	uint32_t			nb2;
+	float				f;
 	static int			offset = 0;
 
 	nb1 = -2;
 	nb2 = 521;
-	c = '\n';
+	f = -42.050f;
+	c = 65;
 	printf("nb1 = %u, nb2 = %u\n", nb1, nb2);
 	printf("nb1 = %d, nb2 = %d\n", nb1, nb2);
 	if (ac != 2)
@@ -95,6 +96,8 @@ int		main(int ac, char **av)
 		print_error("Wrong path", -2);
 	printf("Creation et ouverture du fichier \"%s\" -> le file descritor est %d\n", av[1], fd);
 /*Debut du traitement de fichier*/
+
+  /*Traitement INT et CHAR OK*/
 	printf("print nb1\n");
 	put_var_to_file(fd, nb1);
 	printf("print nb2\n");
@@ -102,12 +105,31 @@ int		main(int ac, char **av)
 	printf("print c\n");
 	put_var_to_file(fd, c);
 
+  /*Traitement FLOAT EN COURS*/
+	deci = (f - (int)(f)) * 1000;
+	printf("print f\n");
+	put_var_to_file(fd, f);
+	printf("print deci\n");
+//	printf("decimal = %f\n", deci);
+	put_var_to_file(fd, deci);
+	putone_to_file(fd, '\n');
+
+  /*Traitement INT et CHAR OK*/
 	read_var_from_file(fd, &nb_res, &offset);
-	printf("nb = %d\n", nb_res);
+	printf("nb = %d\n", (int)nb_res);
 	read_var_from_file(fd, &nb_res, &offset);
-	printf("nb = %d\n", nb_res);
+	printf("nb = %d\n", (int)nb_res);
 	read_var_from_file(fd, &nb_res, &offset);
 	printf("nb = %c\n", (char)nb_res);
+
+  /*Traitement FLOAT EN COURS*/
+	read_var_from_file(fd, &nb_res, &offset);
+	printf("nb = %d\n", (int)nb_res);
+	deci = nb_res;
+	read_var_from_file(fd, &nb_res, &offset);
+	printf("nb = %d\n", (int)nb_res);
+	printf("float = %.3f\n", (float)deci + ((float)nb_res / 1000));
+	offset++;
 /**/
 	close(fd);
 	return(0);
