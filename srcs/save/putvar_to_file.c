@@ -1,12 +1,12 @@
 #include <unistd.h>
 #include <parser.h>
 
-void	putone_to_file(int fd, unsigned char buf)
+void			putone_to_file(int fd, unsigned char buf)
 {
 	write(fd, &buf, 1);
 }
 
-void	put_var_to_file(int fd, uint32_t nb)
+void			put_var_to_file(int fd, uint32_t nb)
 {
 	uint32_t	pow;
 

@@ -11,14 +11,14 @@ static uint32_t	ft_power_up(uint32_t nb, uint32_t pow)
 	return (nb *= ft_power_up(nb, pow - 1));
 }
 
-void	readone_from_file(int fd, unsigned char *buf)
+void			readone_from_file(int fd, unsigned char *buf)
 {
 	*buf = 0;
 	if (read(fd, buf, 1) < 0)
 		print_error("Error read one from file\n", -3);
 }
 
-void	read_var_from_file(int fd, int *nb, int *offset)
+void			read_var_from_file(int fd, int *nb, int *offset)
 {
 	int				pow;
 	unsigned char	buf[3];

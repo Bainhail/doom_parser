@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <parser.h>
 
-void	charge(char *filename, t_mypolygon *list)
+void			charge(char *filename, t_mypolygon **list)
 {
 	int					fd;
 

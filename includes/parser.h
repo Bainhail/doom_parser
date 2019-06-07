@@ -37,6 +37,12 @@ typedef struct	s_mypolygon
 	struct s_mypolygon	*next;                   //le prochain noeud dans la liste
 }				t_mypolygon;
 
+//structure principale
+typedef struct	s_mywin
+{
+	t_mypolygon			*polygon_lst;
+}				t_mywin;
+
 //structure pour le bsp
 /* typedef struct	s_mynode */
 /* { */
@@ -47,12 +53,26 @@ typedef struct	s_mypolygon
 /* 	char				is_solid; */
 /* }				t_mynode; */
 
-//structure principale
-typedef struct	s_mywin
-{
-	t_mypolygon			*polygon_lst;
-}				t_mywin;
+void			print_error(char *error, int code);
 
+/*
+**	GESTION DE SAUVEGARDE
+*/
+void			putone_to_file(int fd, unsigned char buf);
+void			put_var_to_file(int fd, uint32_t nb);
+void			sauvegarde(char *filename, t_mypolygon **list);
+
+/*
+**	GESTION DE CHARGEMENT
+*/
+void			readone_from_file(int fd, unsigned char *buf);
+void			read_var_from_file(int fd, int *nb, int *offset);
+void			charge(char *filename, t_mypolygon **list);
+
+/*
+**	Fonction de TEST
+**	GESTION DES LISTS
+*/
 t_myvec			*new_vector(float x, float y, float z);
 void			pushback_vec(t_myvec **start, t_myvec *vec);
 int				vec_listlen(const t_myvec *start);
@@ -63,7 +83,6 @@ void			pushback_poly(t_mypolygon **start, t_mypolygon *poly);
 int				poly_listlen(const t_mypolygon *start);
 void			poly_destruct(t_mypolygon **start);
 
-void			print_error(char *error, int code);
 /*
 **	Fonction de
 **		TEST
@@ -71,6 +90,5 @@ void			print_error(char *error, int code);
 t_myvec			*vec_list_creation();
 t_mypolygon		*poly_list_creation();
 t_mywin			test_creation();
-
 
 #endif
