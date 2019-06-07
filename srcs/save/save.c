@@ -37,6 +37,7 @@ static void		put_polylist_to_file(int fd, t_mypolygon **list)
 	if (list != NULL && *list != NULL)
 	{
 		tmp = *list;
+		put_var_to_file(fd, poly_listlen(tmp));
 		while (tmp != NULL)
 		{
 			put_var_to_file(fd, tmp->number_of_vertex);
@@ -51,10 +52,11 @@ void			sauvegarde(char *filename, t_mypolygon **list)
 {
 	int			fd;
 
-	(void)list;
 	if ((fd = open(filename, O_CREAT | O_RDWR, S_IRUSR \
 					| S_IWUSR | S_IRGRP | S_IROTH)) < 3)
 		print_error("Wrong path", -2);
 	put_polylist_to_file(fd, list);
+	/*commenter la ligne suivante pour ne pas free la liste*/
+	poly_destruct(list);
 	close(fd);
 }

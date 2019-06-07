@@ -79,6 +79,7 @@ int				vec_listlen(const t_myvec *start);
 void			vec_destruct(t_myvec **start);
 
 t_mypolygon		*new_polygon(t_myvec *vl, t_myvec nm, int nb_vertex, int nb_indices, int *indices);
+t_mypolygon		*new_empty_polygon(void);
 void			pushback_poly(t_mypolygon **start, t_mypolygon *poly);
 int				poly_listlen(const t_mypolygon *start);
 void			poly_destruct(t_mypolygon **start);

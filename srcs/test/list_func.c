@@ -91,6 +91,24 @@ t_mypolygon		*new_polygon(t_myvec *vl, t_myvec nm, int nb_vertex, int nb_indices
 	return (poly);
 }
 
+t_mypolygon		*new_empty_polygon(void)
+{
+	t_mypolygon		*poly;
+
+	if ((poly = (t_mypolygon*)malloc(sizeof(t_mypolygon))) == NULL)
+		return (NULL);
+	poly->vertex_lst = NULL;
+	poly->normal.x = 0;
+	poly->normal.y = 0;
+	poly->normal.z = 0;
+	poly->normal.next = NULL;
+	poly->number_of_vertex = 0;
+	poly->number_of_indices = 0;
+	poly->indices = NULL;
+	poly->next = NULL;
+	return (poly);
+}
+
 void			pushback_poly(t_mypolygon **start, t_mypolygon *poly)
 {
 	t_mypolygon	*tmp;
