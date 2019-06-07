@@ -1,29 +1,51 @@
-CC		= gcc
+CC			= gcc
 
-NAME	= file_tester
+NAME1		= save_tester
 
-CFLAG	= -Wall -Wextra
+NAME2		= charge_tester
 
-SRC		= test.c
+CFLAG		= -Wall -Wextra -Werror
 
-OBJ		= $(SRC:.c=.o)
+SRC			=	error_gestion.c
 
-DOBJ	= ./objs
+SAVE_SRC	=	save.c	\
+				putvar_to_file.c
 
-OBJS	= $(addprefix $(DOBJ)/, $(OBJ))
+CHARGE_SRC	=	charge.c	\
+				readvar_from_file.c
 
-all		:	$(NAME)
+TEST_SRC	=	list_func.c	\
+				test_creation.c
 
-vpath %.c ./:./srcs/
+MAIN1		=	main1.c
+
+MAIN2		=	main2.c
+
+OBJ1		= $(SRC:.c=.o) $(SAVE_SRC:.c=.o) $(TEST_SRC:.c=.o) $(MAIN1:.c=.o)
+
+OBJ2		= $(SRC:.c=.o) $(CHARGE_SRC:.c=.o) $(TEST_SRC:.c=.o) $(MAIN2:.c=.o)
+
+DOBJ		= ./objs
+
+OBJS1		= $(addprefix $(DOBJ)/, $(OBJ1))
+
+OBJS2		= $(addprefix $(DOBJ)/, $(OBJ2))
+
+all		:	$(NAME1) $(NAME2)
+
+vpath %.c ./srcs/:./srcs/charge/:./srcs/save:./srcs/test/
 
 $(DOBJ)/%.o:%.c
 	@mkdir $(DOBJ) 2> /dev/null || true
 	@$(CC) -c $< -o $@ $(CFLAG) -I./includes/
 
-$(NAME)	:	$(OBJS)
-		@echo -n "Objects files creation..."
-		@$(CC) -o $(NAME) $(OBJS) -I./includes/
-		@echo "OK"
+$(NAME1):	$(OBJS1)
+		@echo "Objects files creation for "$(NAME1)
+		@$(CC) -o $(NAME1) $(OBJS1) -I./includes/
+
+$(NAME2):	$(OBJS2)
+		@echo "Objects files creation for "$(NAME2)
+		@$(CC) -o $(NAME2) $(OBJS2) -I./includes/
 
 clean	:
 		@echo -n "Cleaning objects and temporaries files..."
@@ -34,7 +56,8 @@ clean	:
 
 fclean	:	clean
 		@echo -n "Erase exec file..."
-		@rm -rf $(NAME)
+		@rm -rf $(NAME1)
+		@rm -rf $(NAME2)
 		@echo "OK"
 
 re		:	fclean all

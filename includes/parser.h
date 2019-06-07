@@ -3,10 +3,74 @@
 
 #include <stdint.h>
 
-typedef union	u_float
+#include <stdio.h>
+#include <fcntl.h>
+#include <stdlib.h>
+
+#define FALSE 0
+#define TRUE 1
+
+typedef enum	e_myclass
 {
-	uint32_t	i;
-	float		f;
-}				t_float;
+	FRONT,
+	BACK,
+	SPANNING,
+	ON_PLANE,
+}				t_myclass;
+
+typedef struct	s_myvec
+{
+	float				x;
+	float				y;
+	float				z;
+	struct s_myvec		*next;
+}				t_myvec;
+
+//indice allow you to build multiple triangles using share vectices
+typedef struct	s_mypolygon
+{
+	t_myvec				*vertex_lst;             //liste des vertex
+	t_myvec				normal;                  //la normal au polygon
+	int					number_of_vertex;        //nombre de vertex
+	int					number_of_indices;       //nombre d'indices
+	int					*indices;                //la listes des indices apres triangulation
+	struct s_mypolygon	*next;                   //le prochain noeud dans la liste
+}				t_mypolygon;
+
+//structure pour le bsp
+/* typedef struct	s_mynode */
+/* { */
+/* 	t_mypolygon			*splitter; */
+/* 	struct s_mynode		*front; */
+/* 	struct s_mynode		*back; */
+/* 	char				is_leaf; */
+/* 	char				is_solid; */
+/* }				t_mynode; */
+
+//structure principale
+typedef struct	s_mywin
+{
+	t_mypolygon			*polygon_lst;
+}				t_mywin;
+
+t_myvec			*new_vector(float x, float y, float z);
+void			pushback_vec(t_myvec **start, t_myvec *vec);
+int				vec_listlen(const t_myvec *start);
+void			vec_destruct(t_myvec **start);
+
+t_mypolygon		*new_polygon(t_myvec *vl, t_myvec nm, int nb_vertex, int nb_indices, int *indices);
+void			pushback_poly(t_mypolygon **start, t_mypolygon *poly);
+int				poly_listlen(const t_mypolygon *start);
+void			poly_destruct(t_mypolygon **start);
+
+void			print_error(char *error, int code);
+/*
+**	Fonction de
+**		TEST
+*/
+t_myvec			*vec_list_creation();
+t_mypolygon		*poly_list_creation();
+t_mywin			test_creation();
+
 
 #endif
