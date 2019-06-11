@@ -1,7 +1,10 @@
+/*Ajoutez les includes necessaires*/
+/*Include des fichiers "system"*/
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+/*Include des fichiers "non system"*/
 #include <parser.h>
 
 static void		put_float_to_file(int fd, float var)
@@ -19,14 +22,17 @@ static void		put_veclist_to_file(int fd, t_myvec **list, int nb)
 	t_myvec		*tmp;
 
 	i = 0;
-	tmp = *list;
-	while (i < nb)
+	if (list != NULL && *list != NULL)
 	{
-		put_float_to_file(fd, tmp->x);
-		put_float_to_file(fd, tmp->y);
-		put_float_to_file(fd, tmp->z);
-		tmp = tmp->next;
-		i++;
+		tmp = *list;
+		while (i < nb)
+		{
+			put_float_to_file(fd, tmp->x);
+			put_float_to_file(fd, tmp->y);
+			put_float_to_file(fd, tmp->z);
+			tmp = tmp->next;
+			i++;
+		}
 	}
 }
 

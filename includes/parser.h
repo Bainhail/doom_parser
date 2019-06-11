@@ -2,13 +2,18 @@
 # define	PARSER_H
 
 #include <stdint.h>
-
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdlib.h>
 
 #define FALSE 0
 #define TRUE 1
+
+/*
+** Les enums et structure suivante
+** sont a commenter si vous utiliser
+** les fichiers de Cosmin.
+*/
 
 typedef enum	e_myclass
 {

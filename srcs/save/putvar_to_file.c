@@ -1,4 +1,7 @@
+/*Ajoutez les includes necessaires*/
+/*Include des fichiers "system"*/
 #include <unistd.h>
+/*Include des fichiers "non system"*/
 #include <parser.h>
 
 void			putone_to_file(int fd, unsigned char buf)

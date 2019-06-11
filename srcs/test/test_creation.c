@@ -39,7 +39,7 @@ t_mypolygon		*poly_list_creation()
 	normal.y = 0.0f;
 	normal.z = 0.0f;
 	normal.next = NULL;
-	while (i < 5)
+	while (i < 1000)
 	{
 		if ((poly = new_polygon(vec_list_creation(), normal, 5, 0, NULL)) == NULL)
 			print_error("Erreur dans creation polygon", -5);

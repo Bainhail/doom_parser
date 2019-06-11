@@ -1,5 +1,8 @@
+/*Ajoutez les includes necessaires*/
+/*Include des fichiers "system"*/
 #include <unistd.h>
 #include <stdlib.h>
+/*Include des fichiers "non system"*/
 #include <parser.h>
 
 static uint32_t	ft_power_up(uint32_t nb, uint32_t pow)

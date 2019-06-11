@@ -1,7 +1,10 @@
+/*Ajoutez les includes necessaires*/
+/*Include des fichiers "system"*/
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+/*Include des fichiers "non system"*/
 #include <parser.h>
 
 static void		read_float_from_file(int fd, float *var, int *offset)
