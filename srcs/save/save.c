@@ -4,6 +4,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <string.h>
 /*Include des fichiers "non system"*/
 #include <parser.h>
 
@@ -63,12 +64,28 @@ static void		put_polylist_to_file(int fd, t_mypolygon **list)
 
 void			sauvegarde(char *filename, t_mypolygon **list)
 {
+	char		c;
+	char		buf[4];
 	int			fd;
 
+	buf[0] = '\0';
 	if ((fd = open(filename, O_CREAT | O_RDWR, S_IRUSR \
-					| S_IWUSR | S_IRGRP | S_IROTH)) < 3)
+						| S_IWUSR | S_IRGRP | S_IROTH)) < 3)
 		print_error("Wrong path", -2);
-	put_polylist_to_file(fd, list);
+	if (read(fd, &c, 1) == 1)
+	{
+		write(1, "le fichier n'est pas vide\n", 26);
+		while (strcmp(buf, "oui") != 0 && strcmp(buf, "non") != 0)
+		{
+			write(1, "Voulez-vous ecraser les donnees ?[oui][non]:\n", 46);
+			read(0, buf, 4);
+			buf[3] = '\0';
+		}
+		lseek(fd, 0, SEEK_SET);
+		(strcmp(buf, "oui") == 0) ? put_polylist_to_file(fd, list) : close(fd);
+	}
+	else
+		put_polylist_to_file(fd, list);
 	/*commenter la ligne suivante pour ne pas free la liste*/
 	poly_destruct(list);
 	close(fd);

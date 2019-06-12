@@ -18,7 +18,7 @@ void			readone_from_file(int fd, unsigned char *buf)
 {
 	*buf = 0;
 	if (read(fd, buf, 1) < 0)
-		print_error("Error read one from file\n", -3);
+		print_error("Error read one from file", -3);
 }
 
 void			read_var_from_file(int fd, int *nb, int *offset)
