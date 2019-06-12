@@ -36,13 +36,15 @@ static void		read_veclist_from_file(int fd, t_myvec **list, int nb_vertex, int *
 	}
 }
 
-static void		read_polylist_from_file(int fd, t_mypolygon **list)
+static int		read_polylist_from_file(int fd, t_mypolygon **list)
 {
+	int			nb;
 	int			nb_poly;
 	t_mypolygon	*tmp;
 	static int	offset = 0;
 
 	read_var_from_file(fd, &nb_poly, &offset);
+	nb = nb_poly;
 	while (nb_poly > 0)
 	{
 		tmp = new_empty_polygon();
@@ -52,14 +54,17 @@ static void		read_polylist_from_file(int fd, t_mypolygon **list)
 		pushback_poly(list, tmp);
 		nb_poly--;
 	}
+	return (nb);
 }
 
-void			charge(char *filename, t_mypolygon **list)
+int				charge(char *filename, t_mypolygon **list)
 {
-	int					fd;
+	int			fd;
+	int			nb_poly;
 
 	if ((fd = open(filename, O_RDONLY)) < 3)
 		print_error("Wrong path", -2);
-	read_polylist_from_file(fd, list);
+	nb_poly = read_polylist_from_file(fd, list);
 	close(fd);
+	return (nb_poly);
 }

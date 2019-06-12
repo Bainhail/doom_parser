@@ -16,7 +16,7 @@ static void		put_float_to_file(int fd, float var)
 	put_var_to_file(fd, (int)deci);
 }
 
-static void		put_veclist_to_file(int fd, t_myvec **list, int nb)
+static int		put_veclist_to_file(int fd, t_myvec **list, int nb)
 {
 	int			i;
 	t_myvec		*tmp;
@@ -25,7 +25,7 @@ static void		put_veclist_to_file(int fd, t_myvec **list, int nb)
 	if (list != NULL && *list != NULL)
 	{
 		tmp = *list;
-		while (i < nb)
+		while (i < nb && tmp != NULL)
 		{
 			put_float_to_file(fd, tmp->x);
 			put_float_to_file(fd, tmp->y);
@@ -33,7 +33,10 @@ static void		put_veclist_to_file(int fd, t_myvec **list, int nb)
 			tmp = tmp->next;
 			i++;
 		}
+		if (tmp == NULL && i < nb)
+			return (-1);
 	}
+	return (0);
 }
 
 static void		put_polylist_to_file(int fd, t_mypolygon **list)
@@ -48,7 +51,11 @@ static void		put_polylist_to_file(int fd, t_mypolygon **list)
 		{
 			put_var_to_file(fd, tmp->number_of_vertex);
 			put_var_to_file(fd, tmp->number_of_indices);
-			put_veclist_to_file(fd, &(tmp->vertex_lst), tmp->number_of_vertex);
+			if (put_veclist_to_file(fd, &(tmp->vertex_lst), tmp->number_of_vertex) < 0)
+			{
+				poly_destruct(list);
+				print_error("put_veclist_to_file:\nNombre de vertex FAUX", -7);
+			}
 			tmp = tmp->next;
 		}
 	}

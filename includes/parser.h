@@ -72,7 +72,7 @@ void			sauvegarde(char *filename, t_mypolygon **list);
 */
 void			readone_from_file(int fd, unsigned char *buf);
 void			read_var_from_file(int fd, int *nb, int *offset);
-void			charge(char *filename, t_mypolygon **list);
+int				charge(char *filename, t_mypolygon **list);
 
 /*
 **	Fonction de TEST
