@@ -40,22 +40,24 @@ $(DOBJ)/%.o:%.c
 	@$(CC) -c $< -o $@ $(CFLAG) -I./includes/
 
 $(NAME1):	$(OBJS1)
-		@echo "Objects files creation for "$(NAME1)
+		@echo "Objects files creation for "$(NAME1)" \c"
 		@$(CC) -o $(NAME1) $(OBJS1) -I./includes/
+		@echo "OK"
 
 $(NAME2):	$(OBJS2)
-		@echo "Objects files creation for "$(NAME2)
+		@echo "Objects files creation for "$(NAME2)" \c"
 		@$(CC) -o $(NAME2) $(OBJS2) -I./includes/
+		@echo "OK"
 
 clean	:
-		@echo -n "Cleaning objects and temporaries files..."
+		@echo "Cleaning objects and temporaries files... \c"
 		@rm -rf $(DOBJ)
 		@rm -rf *~
 		@rm -rf \#*\#
 		@echo "OK"
 
 fclean	:	clean
-		@echo -n "Erase exec file..."
+		@echo "Erase exec file... \c"
 		@rm -rf $(NAME1)
 		@rm -rf $(NAME2)
 		@echo "OK"

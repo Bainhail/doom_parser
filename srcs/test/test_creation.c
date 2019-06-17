@@ -39,6 +39,7 @@ t_mypolygon		*poly_list_creation()
 	normal.x = 0.0f;
 	normal.y = 0.0f;
 	normal.z = 0.0f;
+	list = NULL;
 	normal.next = NULL;
 	/*modifier le chiffre pour ajouter ou supprimer le nombre de polygone*/
 	while (i < 10/*<--*/)
