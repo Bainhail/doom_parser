@@ -11,16 +11,14 @@ void			putone_to_file(int fd, unsigned char buf)
 
 void			put_var_to_file(int fd, uint32_t nb)
 {
-	uint32_t	pow;
+	uint32_t	cpy;
 
-	pow = 0;
-	while (pow < 5)
-	{
-		putone_to_file(fd, (unsigned char)(255));
-		putone_to_file(fd, (unsigned char)(pow));
-		putone_to_file(fd, (unsigned char)(nb % 255));
-		nb = nb / 255;
-		pow++;
-	}
-	putone_to_file(fd, (unsigned char)(0));
+	cpy = (nb & 0xff);
+	putone_to_file(fd, (unsigned char)(cpy));
+	cpy = (nb & 0xff00);
+	putone_to_file(fd, (unsigned char)(cpy >> 8));
+	cpy = (nb & 0xff0000);
+	putone_to_file(fd, (unsigned char)(cpy >> 16));
+	cpy = (nb & 0xff000000);
+	putone_to_file(fd, (unsigned char)(cpy >> 24));
 }

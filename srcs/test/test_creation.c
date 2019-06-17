@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <parser.h>
 
-t_myvec			*vec_list_creation()
+t_myvec			*vec_list_creation(int max)
 {
 	int		i;
 	float	x;
@@ -17,7 +17,7 @@ t_myvec			*vec_list_creation()
 	vec = NULL;
 	i = 0;
 	/*modifier le chiffre pour ajouter ou supprimer le nombre de vertex par polygone*/
-	while (i < 7/*<--*/)
+	while (i < max/*<--*/)
 	{
 		if ((vec = new_vector(x + i, y + i, z + i)) == NULL)
 			print_error("Erreur dans creation vecteur", -4);
@@ -41,10 +41,10 @@ t_mypolygon		*poly_list_creation()
 	normal.z = 0.0f;
 	normal.next = NULL;
 	/*modifier le chiffre pour ajouter ou supprimer le nombre de polygone*/
-	while (i < 18/*<--*/)
+	while (i < 10/*<--*/)
 	{
 		/*modifier le chiffre pour ajouter ou supprimer le nombre de vertex par polygone*/
-		if ((poly = new_polygon(vec_list_creation(), normal, 7/*<--*/, 0, NULL)) == NULL)
+		if ((poly = new_polygon(vec_list_creation(i+1), normal, i+1/*<--*/, 0, NULL)) == NULL)
 			print_error("Erreur dans creation polygon", -5);
 		pushback_poly(&list, poly);
 		i++;

@@ -70,7 +70,7 @@ void			sauvegarde(char *filename, t_mypolygon **list);
 /*
 **	GESTION DE CHARGEMENT
 */
-void			readone_from_file(int fd, unsigned char *buf);
+void			readone_from_file(int fd, unsigned char **buf);
 void			read_var_from_file(int fd, int *nb, int *offset);
 int				charge(char *filename, t_mypolygon **list);
 
